@@ -4,4 +4,5 @@ Tento projekt je součástí výukového materiálu pro výuku programování v 
 Cílem projektu je vytvořit webovou aplikaci pro správu školní knihovny.
 
 ## Instalace
+## Popis aplikace
 ## Použití
