@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="aa443eed-66f2-4480-83a8-e4037f1ee450" name="Changes" comment="Upravy modelu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +95,7 @@
       <workItem from="1710060544613" duration="5713000" />
       <workItem from="1710089208488" duration="686000" />
       <workItem from="1710094121074" duration="1786000" />
-      <workItem from="1710096290651" duration="9599000" />
+      <workItem from="1710096290651" duration="10259000" />
     </task>
     <task id="LOCAL-00001" summary="Uprava README.md">
       <option name="closed" value="true" />
@@ -131,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710110434861</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Upravy modelu">
+      <option name="closed" value="true" />
+      <created>1710111350164</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710111350164</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
