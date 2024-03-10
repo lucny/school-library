@@ -26,7 +26,7 @@ class Autor(models.Model):
         verbose_name_plural = 'Autoři'
 
     def __str__(self):
-        return f'{self.jmeno[0]}. {self.prijmeni} ({self.narozeni.year}-{self.umrti.year})'
+        return f'{self.jmeno[0]}. {self.prijmeni} ({self.narozeni.year}-{self.umrti.year if self.umrti else "dosud žije"})'
 
 
 class Zanr(models.Model):
