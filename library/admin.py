@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Author
+from .models import Autor, Zanr, Vydavatelstvi, Kniha
 
-# Register your models here.
-
-admin.site.register(Author)
+admin.site.register(Autor)
+admin.site.register(Zanr)
+admin.site.register(Vydavatelstvi)
+admin.site.register(Kniha)
