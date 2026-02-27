@@ -119,6 +119,7 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 - RTD konfigurace je v `.readthedocs.yaml`.
 - Dokumentace je ve slozce `docs/` (Sphinx).
 - Je pripravena osnova prezentace a prompty pro Nano Banana Pro v `docs/presentation-nano-banana-pro.rst`.
+- Podklady pro finalni GitHub release jsou v `release/`.
 
 ### Lokalni build dokumentace
 
