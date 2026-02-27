@@ -1,5 +1,6 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,28 +8,48 @@
 </head>
 <body>
     <header>
-        <h1>Skolni knihovna</h1>
+        <h1>{% trans "Skolni knihovna" %}</h1>
         <nav>
-            <a href="{% url 'core:home' %}">Domu</a> |
-            <a href="{% url 'catalog:book_list' %}">Katalog</a> |
-            <a href="{% url 'accounts:index' %}">Ucty</a> |
-            <a href="{% url 'circulation:index' %}">Vypujcky</a> |
-            <a href="{% url 'reviews:index' %}">Recenze</a>
+            <a href="{% url 'core:home' %}">{% trans "Domu" %}</a> |
+            <a href="{% url 'catalog:book_list' %}">{% trans "Katalog" %}</a> |
+            <a href="{% url 'accounts:index' %}">{% trans "Ucty" %}</a> |
+            <a href="{% url 'circulation:index' %}">{% trans "Vypujcky" %}</a> |
+            <a href="{% url 'reviews:index' %}">{% trans "Recenze" %}</a>
         </nav>
         <div>
             {% if request.user.is_authenticated %}
-                Prihlasen: {{ request.user.username }} |
+                {% trans "Prihlasen" %}: {{ request.user.username }} |
                 <form method="post" action="{% url 'accounts:logout' %}" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit">Odhlasit</button>
+                    <button type="submit">{% trans "Odhlasit" %}</button>
                 </form>
             {% else %}
-                <a href="{% url 'accounts:login' %}">Prihlasit</a> |
-                <a href="{% url 'accounts:signup' %}">Registrovat</a>
+                <a href="{% url 'accounts:login' %}">{% trans "Prihlasit" %}</a> |
+                <a href="{% url 'accounts:signup' %}">{% trans "Registrovat" %}</a>
             {% endif %}
         </div>
+        <form action="{% url 'set_language' %}" method="post" style="margin-top: 8px;">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+            <label for="language">{% trans "Jazyk" %}:</label>
+            <select name="language" id="language">
+                {% get_current_language as CURRENT_LANGUAGE %}
+                {% get_available_languages as LANGUAGES %}
+                {% for lang in LANGUAGES %}
+                    <option value="{{ lang.0 }}" {% if lang.0 == CURRENT_LANGUAGE %}selected{% endif %}>{{ lang.1 }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">{% trans "Zmenit" %}</button>
+        </form>
     </header>
     <main>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
 </body>

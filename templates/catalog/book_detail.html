@@ -46,6 +46,10 @@
 
 {% if request.user.is_authenticated %}
 <p><a href="{% url 'reviews:add_for_book' slug=book.slug %}">Pridat nebo upravit hodnoceni</a></p>
+<p>
+    <button id="reserve-button" data-url="{% url 'circulation:reserve_book' slug=book.slug %}">Rezervovat knihu (AJAX)</button>
+    <span id="reserve-result"></span>
+</p>
 {% else %}
 <p><a href="{% url 'accounts:login' %}">Prihlaste se pro hodnoceni knihy</a></p>
 {% endif %}
@@ -62,4 +66,32 @@
 {% endif %}
 
 <p><a href="{% url 'catalog:book_list' %}">Zpet na katalog</a></p>
+
+{% if request.user.is_authenticated %}
+<script>
+    const reserveButton = document.getElementById("reserve-button");
+    const reserveResult = document.getElementById("reserve-result");
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+            return parts.pop().split(";").shift();
+        }
+        return "";
+    }
+    reserveButton.addEventListener("click", async () => {
+        reserveButton.disabled = true;
+        const response = await fetch(reserveButton.dataset.url, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
+        const payload = await response.json();
+        reserveResult.textContent = payload.message;
+        reserveButton.disabled = false;
+    });
+</script>
+{% endif %}
 {% endblock %}

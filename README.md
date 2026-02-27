@@ -85,6 +85,14 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 - Uzivatel muze vlozit hodnoceni/recenzi na strance knihy.
 - Knihovnik muze recenze moderovat na `approved` nebo `rejected`.
 
+## Faze 8 - admin, i18n, static/media, AJAX
+
+- Admin ma vlastni branding (nazev, title, index title) v `config/urls.py`.
+- i18n je aktivni (`LocaleMiddleware`, `LANGUAGES`, `set_language` endpoint).
+- V hlavicce je prepinac jazyka (cs/en) v `templates/base.html`.
+- Na detailu knihy je AJAX rezervace bez reloadu (`circulation:reserve_book`).
+- Static/media rezimy zustavaji oddelene v settings (`STATIC_*`, `MEDIA_*`).
+
 ### OAuth setup (lokalni)
 
 1. Dopln hodnoty provider klientu do `.env` podle `.env.example`.

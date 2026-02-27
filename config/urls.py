@@ -21,8 +21,13 @@ from django.urls import include, path
 
 handler403 = "core.views.permission_denied_view"
 
+admin.site.site_header = "Skolni knihovna - administrace"
+admin.site.site_title = "Skolni knihovna admin"
+admin.site.index_title = "Sprava knihovny"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("i18n/", include("django.conf.urls.i18n")),
     path("accounts/oauth/", include("allauth.urls")),
     path("", include("core.urls", namespace="core")),
     path("accounts/", include("accounts.urls", namespace="accounts")),

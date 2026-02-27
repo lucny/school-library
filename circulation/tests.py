@@ -76,3 +76,40 @@ class CirculationModelTests(TestCase):
             due_date=timezone.localdate() - timedelta(days=1),
         )
         self.assertTrue(loan.is_overdue)
+
+
+class ReservationAjaxTests(TestCase):
+    def setUp(self):
+        self.reader = User.objects.create_user(username="reader-ajax", password="StrongPass123!")
+        self.other_reader = User.objects.create_user(username="reader-ajax2", password="StrongPass123!")
+        self.librarian = User.objects.create_user(username="librarian-ajax", password="StrongPass123!")
+        self.book = Book.objects.create(
+            title="Ajax Reservation Book",
+            isbn="9788020000005",
+            publication_year=2023,
+            copies_total=1,
+            is_available=True,
+        )
+
+    def test_reservation_endpoint_requires_login(self):
+        response = self.client.post(reverse("circulation:reserve_book", kwargs={"slug": self.book.slug}))
+        self.assertEqual(response.status_code, 302)
+
+    def test_reservation_fails_when_book_is_available(self):
+        self.client.login(username="reader-ajax", password="StrongPass123!")
+        response = self.client.post(reverse("circulation:reserve_book", kwargs={"slug": self.book.slug}))
+        self.assertEqual(response.status_code, 400)
+
+    def test_reservation_succeeds_when_no_copy_available(self):
+        Loan.objects.create(book=self.book, borrower=self.other_reader, handled_by=self.librarian)
+        self.client.login(username="reader-ajax", password="StrongPass123!")
+        response = self.client.post(reverse("circulation:reserve_book", kwargs={"slug": self.book.slug}))
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(Reservation.objects.filter(book=self.book, requester=self.reader, status=Reservation.Status.PENDING).exists())
+
+    def test_duplicate_pending_reservation_returns_conflict(self):
+        Loan.objects.create(book=self.book, borrower=self.other_reader, handled_by=self.librarian)
+        Reservation.objects.create(book=self.book, requester=self.reader, status=Reservation.Status.PENDING)
+        self.client.login(username="reader-ajax", password="StrongPass123!")
+        response = self.client.post(reverse("circulation:reserve_book", kwargs={"slug": self.book.slug}))
+        self.assertEqual(response.status_code, 409)
