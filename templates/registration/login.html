@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load socialaccount %}
 
 {% block title %}Prihlaseni | Skolni knihovna{% endblock %}
 
@@ -14,4 +15,11 @@
     Nemate ucet?
     <a href="{% url 'accounts:signup' %}">Registrujte se</a>
 </p>
+
+<h3>OAuth prihlaseni</h3>
+<ul>
+    <li><a href="{% provider_login_url 'google' process='login' %}">Google</a></li>
+    <li><a href="{% provider_login_url 'microsoft' process='login' %}">Microsoft</a></li>
+    <li><a href="{% provider_login_url 'github' process='login' %}">GitHub</a></li>
+</ul>
 {% endblock %}

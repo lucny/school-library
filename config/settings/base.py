@@ -20,8 +20,15 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
+    "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.microsoft",
     "core",
     "accounts",
     "catalog",
@@ -35,6 +42,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -94,6 +102,49 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SITE_ID = int(os.getenv("DJANGO_SITE_ID", "1"))
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+ACCOUNT_LOGIN_METHODS = {"username", "email"}
+ACCOUNT_SIGNUP_FIELDS = ["username*", "email*", "password1*", "password2*"]
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+ACCOUNT_LOGOUT_ON_GET = False
+
+SOCIALACCOUNT_LOGIN_ON_GET = False
+SOCIALACCOUNT_AUTO_SIGNUP = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": os.getenv("GOOGLE_CLIENT_ID", ""),
+            "secret": os.getenv("GOOGLE_CLIENT_SECRET", ""),
+            "key": "",
+        },
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+    },
+    "github": {
+        "APP": {
+            "client_id": os.getenv("GITHUB_CLIENT_ID", ""),
+            "secret": os.getenv("GITHUB_CLIENT_SECRET", ""),
+            "key": "",
+        },
+        "SCOPE": ["user:email"],
+    },
+    "microsoft": {
+        "APP": {
+            "client_id": os.getenv("MICROSOFT_CLIENT_ID", ""),
+            "secret": os.getenv("MICROSOFT_CLIENT_SECRET", ""),
+            "key": "",
+        },
+        "tenant": os.getenv("MICROSOFT_TENANT", "common"),
+    },
+}
 
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "accounts:index"

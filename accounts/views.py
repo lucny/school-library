@@ -18,7 +18,7 @@ class SignUpView(CreateView):
         response = super().form_valid(form)
         reader_group, _ = Group.objects.get_or_create(name=READER_GROUP)
         self.object.groups.add(reader_group)
-        login(self.request, self.object)
+        login(self.request, self.object, backend="django.contrib.auth.backends.ModelBackend")
         return response
 
 

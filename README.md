@@ -12,7 +12,7 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
    `.venv\Scripts\Activate.ps1`
 3. Nainstaluj zavislosti:
    `python -m pip install -U pip`
-   `python -m pip install Django python-dotenv`
+   `python -m pip install -r requirements.txt`
 4. Vytvor lokalni env soubor:
    `Copy-Item .env.example .env`
 5. Spust migrace:
@@ -24,7 +24,7 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 
 1. `python3 -m venv .venv`
 2. `source .venv/bin/activate`
-3. `python -m pip install -U pip && python -m pip install Django python-dotenv`
+3. `python -m pip install -U pip && python -m pip install -r requirements.txt`
 4. `cp .env.example .env`
 5. `python manage.py migrate`
 6. `python manage.py runserver`
@@ -58,8 +58,32 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 - Role `librarian` ma pristup ke sprave vypujcek (`circulation:index`).
 - Vytvareni knih (`catalog:book_create`) je chraneno permission `catalog.add_book`.
 
+## Faze 5 - OAuth (Google, Microsoft, GitHub)
+
+- Integrace `django-allauth` s providery Google, Microsoft a GitHub.
+- OAuth endpointy jsou dostupne pod prefixem `accounts/oauth/`.
+- Prihlasovaci stranka obsahuje odkazy pro social login.
+- Konfigurace je plne pres `.env` (`GOOGLE_*`, `MICROSOFT_*`, `GITHUB_*`).
+
+### OAuth setup (lokalni)
+
+1. Dopln hodnoty provider klientu do `.env` podle `.env.example`.
+2. V konzolich provideru nastav callback URL:
+   - Google: `http://127.0.0.1:8000/accounts/oauth/google/login/callback/`
+   - Microsoft: `http://127.0.0.1:8000/accounts/oauth/microsoft/login/callback/`
+   - GitHub: `http://127.0.0.1:8000/accounts/oauth/github/login/callback/`
+3. Spust migrace a server:
+   - `python manage.py migrate`
+   - `python manage.py runserver`
+
+### Pomocne prikazy
+
+- Seed katalogu: `python manage.py seed_catalog`
+- Prirazeni role knihovnik: `python manage.py assign_librarian <username>`
+
 ### Troubleshooting
 
 - Pokud nejde import `dotenv`, doinstaluj balicek `python-dotenv` do aktivniho virtualniho prostredi.
 - Pokud `runserver` hlasi chybu se settings, over `DJANGO_SETTINGS_MODULE` (default je `config.settings.dev`).
 - Pokud jsou problemy s migracemi, zkontroluj, ze mas vytvoreny `.env` podle `.env.example`.
+- Pokud OAuth tlacitka vraci chybu, zkontroluj presny callback URL a vyplnene env promene provideru.

@@ -8,3 +8,7 @@ def home(request):
 
 def health(request):
     return HttpResponse("ok", content_type="text/plain")
+
+
+def permission_denied_view(request, exception):
+    return render(request, "core/403.html", status=403)
