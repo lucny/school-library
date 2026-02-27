@@ -4,3 +4,4 @@ django-allauth>=65.0,<66.0
 requests>=2.32,<3.0
 PyJWT>=2.11,<3.0
 cryptography>=46.0,<47.0
+psycopg[binary]>=3.2,<4.0

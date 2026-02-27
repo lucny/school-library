@@ -93,6 +93,27 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 - Na detailu knihy je AJAX rezervace bez reloadu (`circulation:reserve_book`).
 - Static/media rezimy zustavaji oddelene v settings (`STATIC_*`, `MEDIA_*`).
 
+## Faze 9 - Docker deploy
+
+- Docker setup je pripraveny pres `Dockerfile`, `docker-compose.yml`, `entrypoint.sh`.
+- Compose spousti sluzby `web` (Django) + `db` (PostgreSQL).
+- Pri startu kontejneru se automaticky provede `migrate` a `collectstatic`.
+
+### Spusteni pres Docker
+
+1. Vytvor `.env` soubor z `.env.example`.
+2. Spust aplikaci:
+   `docker compose up --build`
+3. Otevri aplikaci na `http://127.0.0.1:8000/`.
+
+### Docker deploy checklist
+
+- Overit, ze `.env` obsahuje unikatni `DJANGO_SECRET_KEY`.
+- Nastavit produkcni `DJANGO_ALLOWED_HOSTS`.
+- Nastavit silne `POSTGRES_PASSWORD`.
+- Zkontrolovat, ze migrace probehly bez chyby.
+- Overit endpoint `/health/` po nasazeni.
+
 ### OAuth setup (lokalni)
 
 1. Dopln hodnoty provider klientu do `.env` podle `.env.example`.
