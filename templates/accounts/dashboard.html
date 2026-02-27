@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Muj ucet | Skolni knihovna{% endblock %}
+
+{% block content %}
+<h2>Muj ucet</h2>
+<p>Jste prihlasen jako <strong>{{ request.user.username }}</strong>.</p>
+<ul>
+    <li>E-mail: {{ request.user.email|default:"neuveden" }}</li>
+    <li>Jmeno: {{ request.user.get_full_name|default:"neuvedeno" }}</li>
+</ul>
+{% if request.user.groups.all %}
+<p>Role:
+    {% for group in request.user.groups.all %}
+        {{ group.name }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</p>
+{% endif %}
+{% endblock %}

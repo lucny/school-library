@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.contrib.auth.models import Permission, User
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 
@@ -53,6 +54,21 @@ class CatalogViewTests(TestCase):
         self.assertContains(response, self.book.title)
 
     def test_book_create_page_loads(self):
+        response = self.client.get(reverse("catalog:book_create"))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse("accounts:login"), response.url)
+
+    def test_book_create_requires_catalog_add_permission(self):
+        user = User.objects.create_user(username="user-no-perm", password="StrongPass123!")
+        self.client.login(username="user-no-perm", password="StrongPass123!")
+        response = self.client.get(reverse("catalog:book_create"))
+        self.assertEqual(response.status_code, 403)
+
+    def test_book_create_allows_user_with_permission(self):
+        user = User.objects.create_user(username="librarian1", password="StrongPass123!")
+        permission = Permission.objects.get(codename="add_book")
+        user.user_permissions.add(permission)
+        self.client.login(username="librarian1", password="StrongPass123!")
         response = self.client.get(reverse("catalog:book_create"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Pridat knihu")

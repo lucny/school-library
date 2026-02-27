@@ -51,6 +51,13 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
   - `catalog:book_detail`
   - `catalog:book_create`
 
+## Faze 4 - lokalni autentizace a role
+
+- Registrace, prihlaseni, odhlaseni a reset hesla v app `accounts`.
+- Pri registraci se uzivatel zaradi do role `reader`.
+- Role `librarian` ma pristup ke sprave vypujcek (`circulation:index`).
+- Vytvareni knih (`catalog:book_create`) je chraneno permission `catalog.add_book`.
+
 ### Troubleshooting
 
 - Pokud nejde import `dotenv`, doinstaluj balicek `python-dotenv` do aktivniho virtualniho prostredi.

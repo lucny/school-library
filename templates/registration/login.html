@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Prihlaseni | Skolni knihovna{% endblock %}
+
+{% block content %}
+<h2>Prihlaseni</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Prihlasit</button>
+</form>
+<p><a href="{% url 'accounts:password_reset' %}">Zapomenute heslo?</a></p>
+<p>
+    Nemate ucet?
+    <a href="{% url 'accounts:signup' %}">Registrujte se</a>
+</p>
+{% endblock %}

@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 
@@ -59,8 +60,9 @@ class BookDetailView(DetailView):
     slug_url_kwarg = "slug"
 
 
-class BookCreateView(CreateView):
+class BookCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Book
     form_class = BookForm
     template_name = "catalog/book_form.html"
     success_url = reverse_lazy("catalog:book_list")
+    permission_required = "catalog.add_book"

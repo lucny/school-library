@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Odhlaseni | Skolni knihovna{% endblock %}
+
+{% block content %}
+<h2>Byli jste odhlaseni</h2>
+<p><a href="{% url 'accounts:login' %}">Prihlasit znovu</a></p>
+{% endblock %}

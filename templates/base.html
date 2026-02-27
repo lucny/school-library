@@ -15,6 +15,18 @@
             <a href="{% url 'circulation:index' %}">Vypujcky</a> |
             <a href="{% url 'reviews:index' %}">Recenze</a>
         </nav>
+        <div>
+            {% if request.user.is_authenticated %}
+                Prihlasen: {{ request.user.username }} |
+                <form method="post" action="{% url 'accounts:logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Odhlasit</button>
+                </form>
+            {% else %}
+                <a href="{% url 'accounts:login' %}">Prihlasit</a> |
+                <a href="{% url 'accounts:signup' %}">Registrovat</a>
+            {% endif %}
+        </div>
     </header>
     <main>
         {% block content %}{% endblock %}
