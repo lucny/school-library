@@ -1,10 +1,11 @@
-from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db.models import Avg, Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 
 from .forms import BookForm, BookSearchForm
 from .models import Book
+from reviews.models import Review
 
 
 class BookListView(ListView):
@@ -58,6 +59,12 @@ class BookDetailView(DetailView):
     context_object_name = "book"
     slug_field = "slug"
     slug_url_kwarg = "slug"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["average_rating"] = self.object.ratings.aggregate(avg=Avg("score"))["avg"]
+        context["approved_reviews"] = self.object.reviews.select_related("user").filter(status=Review.Status.APPROVED)[:5]
+        return context
 
 
 class BookCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):

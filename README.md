@@ -75,6 +75,16 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 - Dashboard knihovnika (`circulation:index`) zobrazuje aktivni vypujcky a pending rezervace.
 - Admin je pripraven pro spravu rezervaci a vypujcek (`circulation/admin.py`).
 
+## Faze 7 - hodnoceni a recenze
+
+- Modely `Rating` (1-5) a `Review` jsou v `reviews/models.py`.
+- Pravidla integrity:
+  - 1 hodnoceni na uzivatele a knihu,
+  - 1 recenze na uzivatele a knihu,
+  - uprava recenze vraci stav do `pending` pro znovu-schvaleni.
+- Uzivatel muze vlozit hodnoceni/recenzi na strance knihy.
+- Knihovnik muze recenze moderovat na `approved` nebo `rejected`.
+
 ### OAuth setup (lokalni)
 
 1. Dopln hodnoty provider klientu do `.env` podle `.env.example`.

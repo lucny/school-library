@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Recenze | Skolni knihovna{% endblock %}
+
+{% block content %}
+<h2>Schvalene recenze</h2>
+
+{% if approved_reviews %}
+<ul>
+    {% for review in approved_reviews %}
+    <li>
+        <strong>{{ review.book.title }}</strong> - {{ review.user.username }}<br>
+        {{ review.text|default:"Bez textove recenze." }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Zatim nejsou schvalene zadne recenze.</p>
+{% endif %}
+
+{% if is_librarian %}
+<h3>Recenze cekajici na moderaci</h3>
+{% if pending_reviews %}
+<ul>
+    {% for review in pending_reviews %}
+    <li>
+        <strong>{{ review.book.title }}</strong> - {{ review.user.username }}<br>
+        {{ review.text|default:"Bez textove recenze." }}
+        <br><a href="{% url 'reviews:moderate' pk=review.pk %}">Moderovat</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Zadne recenze k moderaci.</p>
+{% endif %}
+{% endif %}
+{% endblock %}

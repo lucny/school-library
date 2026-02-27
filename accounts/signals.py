@@ -15,9 +15,13 @@ def create_default_groups(sender, **kwargs):
     book_model = apps.get_model("catalog", "Book")
     reservation_model = apps.get_model("circulation", "Reservation")
     loan_model = apps.get_model("circulation", "Loan")
+    rating_model = apps.get_model("reviews", "Rating")
+    review_model = apps.get_model("reviews", "Review")
     permissions = Permission.objects.filter(
         Q(content_type__app_label="catalog", content_type__model=book_model._meta.model_name)
         | Q(content_type__app_label="circulation", content_type__model=reservation_model._meta.model_name)
         | Q(content_type__app_label="circulation", content_type__model=loan_model._meta.model_name)
+        | Q(content_type__app_label="reviews", content_type__model=rating_model._meta.model_name)
+        | Q(content_type__app_label="reviews", content_type__model=review_model._meta.model_name)
     )
     librarian_group.permissions.add(*permissions)

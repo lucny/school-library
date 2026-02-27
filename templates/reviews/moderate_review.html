@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Moderace recenze | Skolni knihovna{% endblock %}
+
+{% block content %}
+<h2>Moderace recenze</h2>
+<p><strong>Kniha:</strong> {{ review.book.title }}</p>
+<p><strong>Uzivatel:</strong> {{ review.user.username }}</p>
+<p><strong>Text:</strong> {{ review.text|default:"Bez textu" }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Ulozit moderaci</button>
+</form>
+{% endblock %}

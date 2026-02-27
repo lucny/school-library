@@ -15,6 +15,15 @@
 <p><strong>Pocet kusu:</strong> {{ book.copies_total }}</p>
 <p><strong>Dostupnost:</strong> {% if book.is_available %}Ano{% else %}Ne{% endif %}</p>
 
+<p>
+    <strong>Prumerne hodnoceni:</strong>
+    {% if average_rating %}
+        {{ average_rating|floatformat:1 }}/5
+    {% else %}
+        Zatim bez hodnoceni
+    {% endif %}
+</p>
+
 <p><strong>Autori:</strong>
     {% for author in book.authors.all %}
         {{ author }}{% if not forloop.last %}, {% endif %}
@@ -33,6 +42,23 @@
 
 {% if book.description %}
 <p><strong>Popis:</strong> {{ book.description }}</p>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+<p><a href="{% url 'reviews:add_for_book' slug=book.slug %}">Pridat nebo upravit hodnoceni</a></p>
+{% else %}
+<p><a href="{% url 'accounts:login' %}">Prihlaste se pro hodnoceni knihy</a></p>
+{% endif %}
+
+<h3>Schvalene recenze</h3>
+{% if approved_reviews %}
+<ul>
+    {% for review in approved_reviews %}
+    <li><strong>{{ review.user.username }}:</strong> {{ review.text|default:"Bez textu" }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Zatim nejsou schvalene recenze.</p>
 {% endif %}
 
 <p><a href="{% url 'catalog:book_list' %}">Zpet na katalog</a></p>
