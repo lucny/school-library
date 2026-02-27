@@ -36,6 +36,12 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 - Zakladni URL mapa pro vsechny aplikace.
 - Uvodni homepage a endpoint `/health/`.
 
+## Faze 2 - katalogovy model
+
+- Modely: `Author`, `Category`, `Book`, `BookAttachment` v `catalog/models.py`.
+- Admin registrace a zakladni konfigurace listu/filtru v `catalog/admin.py`.
+- Seed demo data: `python manage.py seed_catalog`.
+
 ### Troubleshooting
 
 - Pokud nejde import `dotenv`, doinstaluj balicek `python-dotenv` do aktivniho virtualniho prostredi.
