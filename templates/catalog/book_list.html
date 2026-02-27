@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Katalog knih | Skolni knihovna{% endblock %}
+
+{% block content %}
+<h2>Katalog knih</h2>
+
+<form method="get">
+    {{ search_form.as_p }}
+    <button type="submit">Filtrovat</button>
+    <a href="{% url 'catalog:book_list' %}">Reset</a>
+</form>
+
+<p><a href="{% url 'catalog:book_create' %}">Pridat knihu</a></p>
+
+{% if books %}
+<ul>
+    {% for book in books %}
+    <li>
+        <a href="{% url 'catalog:book_detail' slug=book.slug %}">{{ book.title }}</a>
+        ({{ book.get_language_display }}, {{ book.publication_year }})
+        {% if book.is_available %}
+            - dostupna
+        {% else %}
+            - nedostupna
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Zadne knihy neodpovidaji filtru.</p>
+{% endif %}
+
+{% if is_paginated %}
+<nav>
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Predchozi</a>
+    {% endif %}
+    <span>Strana {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Dalsi</a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

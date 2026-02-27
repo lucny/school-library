@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 
-from .models import Author, Book
+from .models import Author, Book, Category
 
 
 class CatalogModelTests(TestCase):
@@ -18,3 +19,40 @@ class CatalogModelTests(TestCase):
         )
         with self.assertRaises(ValidationError):
             book.full_clean()
+
+
+class CatalogViewTests(TestCase):
+    def setUp(self):
+        self.author = Author.objects.create(first_name="George", last_name="Orwell")
+        self.category = Category.objects.create(name="Fiction")
+        self.book = Book.objects.create(
+            title="Nineteen Eighty-Four",
+            isbn="9780451524935",
+            publication_year=1949,
+            language=Book.Language.ENGLISH,
+            copies_total=3,
+            is_available=True,
+        )
+        self.book.authors.add(self.author)
+        self.book.categories.add(self.category)
+
+    def test_book_list_page_loads(self):
+        response = self.client.get(reverse("catalog:book_list"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Katalog knih")
+        self.assertContains(response, self.book.title)
+
+    def test_book_detail_page_loads(self):
+        response = self.client.get(reverse("catalog:book_detail", kwargs={"slug": self.book.slug}))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.book.isbn)
+
+    def test_book_list_search_filter(self):
+        response = self.client.get(reverse("catalog:book_list"), {"q": "Orwell"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.book.title)
+
+    def test_book_create_page_loads(self):
+        response = self.client.get(reverse("catalog:book_create"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Pridat knihu")

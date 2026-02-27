@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} | Skolni knihovna{% endblock %}
+
+{% block content %}
+<h2>{{ book.title }}</h2>
+
+{% if book.subtitle %}
+<p><strong>Podnazev:</strong> {{ book.subtitle }}</p>
+{% endif %}
+
+<p><strong>ISBN:</strong> {{ book.isbn }}</p>
+<p><strong>Rok vydani:</strong> {{ book.publication_year }}</p>
+<p><strong>Jazyk:</strong> {{ book.get_language_display }}</p>
+<p><strong>Pocet kusu:</strong> {{ book.copies_total }}</p>
+<p><strong>Dostupnost:</strong> {% if book.is_available %}Ano{% else %}Ne{% endif %}</p>
+
+<p><strong>Autori:</strong>
+    {% for author in book.authors.all %}
+        {{ author }}{% if not forloop.last %}, {% endif %}
+    {% empty %}
+        Neni uveden.
+    {% endfor %}
+</p>
+
+<p><strong>Kategorie:</strong>
+    {% for category in book.categories.all %}
+        {{ category.name }}{% if not forloop.last %}, {% endif %}
+    {% empty %}
+        Neni uvedena.
+    {% endfor %}
+</p>
+
+{% if book.description %}
+<p><strong>Popis:</strong> {{ book.description }}</p>
+{% endif %}
+
+<p><a href="{% url 'catalog:book_list' %}">Zpet na katalog</a></p>
+{% endblock %}

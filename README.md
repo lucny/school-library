@@ -42,6 +42,15 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 - Admin registrace a zakladni konfigurace listu/filtru v `catalog/admin.py`.
 - Seed demo data: `python manage.py seed_catalog`.
 
+## Faze 3 - views, routovani, sablony, formulare
+
+- Katalog ma stranky pro seznam knih, detail knihy a formular pro vlozeni nove knihy.
+- Filtrovani v seznamu podporuje hledani, kategorii, jazyk a dostupnost.
+- URL namespace:
+  - `catalog:book_list`
+  - `catalog:book_detail`
+  - `catalog:book_create`
+
 ### Troubleshooting
 
 - Pokud nejde import `dotenv`, doinstaluj balicek `python-dotenv` do aktivniho virtualniho prostredi.
