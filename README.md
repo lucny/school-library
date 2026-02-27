@@ -65,6 +65,16 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 - Prihlasovaci stranka obsahuje odkazy pro social login.
 - Konfigurace je plne pres `.env` (`GOOGLE_*`, `MICROSOFT_*`, `GITHUB_*`).
 
+## Faze 6 - rezervace a vypujcky
+
+- Modely `Reservation` a `Loan` jsou v `circulation/models.py`.
+- Pravidla datove integrity:
+  - 1 pending rezervace na uzivatele a knihu,
+  - aktivni vypujcky neprekroci `Book.copies_total`,
+  - vracena vypujcka musi mit `returned_at`.
+- Dashboard knihovnika (`circulation:index`) zobrazuje aktivni vypujcky a pending rezervace.
+- Admin je pripraven pro spravu rezervaci a vypujcek (`circulation/admin.py`).
+
 ### OAuth setup (lokalni)
 
 1. Dopln hodnoty provider klientu do `.env` podle `.env.example`.

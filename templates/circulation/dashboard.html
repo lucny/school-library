@@ -5,4 +5,31 @@
 {% block content %}
 <h2>Sprava vypujcek</h2>
 <p>Tato cast je dostupna pouze roli librarian.</p>
+
+<h3>Aktivni vypujcky</h3>
+{% if active_loans %}
+<ul>
+    {% for loan in active_loans %}
+    <li>
+        {{ loan.book.title }} - {{ loan.borrower.username }} (do {{ loan.due_date }})
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Zadne aktivni vypujcky.</p>
+{% endif %}
+
+<h3>Pending rezervace</h3>
+{% if pending_reservations %}
+<ul>
+    {% for reservation in pending_reservations %}
+    <li>
+        {{ reservation.book.title }} - {{ reservation.requester.username }}
+        {% if reservation.expires_at %}(expiruje {{ reservation.expires_at|date:"Y-m-d H:i" }}){% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Zadne pending rezervace.</p>
+{% endif %}
 {% endblock %}
