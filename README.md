@@ -114,6 +114,18 @@ Tento repozitář slouží jako výukový projekt, ve kterém budeme krok po kro
 - Zkontrolovat, ze migrace probehly bez chyby.
 - Overit endpoint `/health/` po nasazeni.
 
+## Faze 10 - Read the Docs + prezentace
+
+- RTD konfigurace je v `.readthedocs.yaml`.
+- Dokumentace je ve slozce `docs/` (Sphinx).
+- Je pripravena osnova prezentace a prompty pro Nano Banana Pro v `docs/presentation-nano-banana-pro.rst`.
+
+### Lokalni build dokumentace
+
+1. `python -m pip install -r docs/requirements.txt`
+2. `python -m sphinx -b html docs docs/_build/html`
+3. Otevri `docs/_build/html/index.html`
+
 ### OAuth setup (lokalni)
 
 1. Dopln hodnoty provider klientu do `.env` podle `.env.example`.
