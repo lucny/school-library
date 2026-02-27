@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Skolni knihovna{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Skolni knihovna</h1>
+        <nav>
+            <a href="/">Domu</a> |
+            <a href="/catalog/">Katalog</a> |
+            <a href="/accounts/">Ucty</a> |
+            <a href="/circulation/">Vypujcky</a> |
+            <a href="/reviews/">Recenze</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
