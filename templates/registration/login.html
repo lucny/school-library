@@ -4,22 +4,35 @@
 {% block title %}Prihlaseni | Skolni knihovna{% endblock %}
 
 {% block content %}
-<h2>Prihlaseni</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Prihlasit</button>
-</form>
-<p><a href="{% url 'accounts:password_reset' %}">Zapomenute heslo?</a></p>
-<p>
-    Nemate ucet?
-    <a href="{% url 'accounts:signup' %}">Registrujte se</a>
-</p>
+<div class="mx-auto max-w-[1220px]">
+{% include "includes/page_header.html" with title="Prihlaseni" subtitle="Prihlaste se lokalnim uctem nebo OAuth providerem." %}
 
-<h3>OAuth prihlaseni</h3>
-<ul>
-    <li><a href="{% provider_login_url 'google' process='login' %}">Google</a></li>
-    <li><a href="{% provider_login_url 'microsoft' process='login' %}">Microsoft</a></li>
-    <li><a href="{% provider_login_url 'github' process='login' %}">GitHub</a></li>
-</ul>
+<section class="mx-auto grid max-w-4xl gap-6 lg:grid-cols-2">
+    <article class="rounded-2xl bg-white p-6 shadow-card sm:p-7">
+        <h2 class="font-serif text-2xl font-bold text-slate-900">Lokalni ucet</h2>
+        <form method="post" class="mt-4 space-y-4">
+            {% csrf_token %}
+            {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="mb-1 block text-sm font-semibold text-slate-700">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<p class="mt-1 text-sm text-rose-700">{{ field.errors|striptags }}</p>{% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Prihlasit</button>
+        </form>
+        <p class="mt-4 text-sm"><a href="{% url 'accounts:password_reset' %}" class="font-semibold text-inkBlue hover:text-inkBlueDark">Zapomenute heslo?</a></p>
+        <p class="mt-2 text-sm text-slate-600">Nemate ucet? <a href="{% url 'accounts:signup' %}" class="font-semibold text-inkBlue hover:text-inkBlueDark">Registrujte se</a></p>
+    </article>
+
+    <article class="rounded-2xl bg-white p-6 shadow-card sm:p-7">
+        <h2 class="font-serif text-2xl font-bold text-slate-900">OAuth prihlaseni</h2>
+        <div class="mt-4 space-y-2">
+            <a href="{% provider_login_url 'google' process='login' %}" class="flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Google</a>
+            <a href="{% provider_login_url 'microsoft' process='login' %}" class="flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Microsoft</a>
+            <a href="{% provider_login_url 'github' process='login' %}" class="flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">GitHub</a>
+        </div>
+    </article>
+</section>
+</div>
 {% endblock %}

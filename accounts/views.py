@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
+from circulation.models import Loan, Reservation
+
 from .constants import READER_GROUP
 from .forms import SignUpForm
 
@@ -24,4 +26,23 @@ class SignUpView(CreateView):
 
 @login_required
 def index(request):
-    return render(request, "accounts/dashboard.html")
+    user = request.user
+
+    active_loans = user.loans.select_related("book").filter(status=Loan.Status.ACTIVE).order_by("due_date")[:5]
+    pending_reservations = (
+        user.reservations.select_related("book").filter(status=Reservation.Status.PENDING).order_by("-reserved_at")[:5]
+    )
+    recent_reviews = user.reviews.select_related("book").order_by("-updated_at")[:5]
+
+    context = {
+        "active_loans": active_loans,
+        "pending_reservations": pending_reservations,
+        "recent_reviews": recent_reviews,
+        "stats": {
+            "ratings_count": user.ratings.count(),
+            "reviews_count": user.reviews.count(),
+            "active_loans_count": user.loans.filter(status=Loan.Status.ACTIVE).count(),
+            "pending_reservations_count": user.reservations.filter(status=Reservation.Status.PENDING).count(),
+        },
+    }
+    return render(request, "accounts/dashboard.html", context)

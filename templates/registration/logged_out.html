@@ -3,6 +3,10 @@
 {% block title %}Odhlaseni | Skolni knihovna{% endblock %}
 
 {% block content %}
-<h2>Byli jste odhlaseni</h2>
-<p><a href="{% url 'accounts:login' %}">Prihlasit znovu</a></p>
+<div class="mx-auto max-w-[1220px]">
+{% include "includes/page_header.html" with title="Byli jste odhlaseni" subtitle="Relace byla bezpecne ukoncena." %}
+<section class="mx-auto max-w-2xl rounded-2xl bg-white p-6 text-center shadow-card sm:p-7">
+	<a href="{% url 'accounts:login' %}" class="inline-flex rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Prihlasit znovu</a>
+</section>
+</div>
 {% endblock %}

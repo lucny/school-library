@@ -3,14 +3,29 @@
 {% block title %}Moderace recenze | Skolni knihovna{% endblock %}
 
 {% block content %}
-<h2>Moderace recenze</h2>
-<p><strong>Kniha:</strong> {{ review.book.title }}</p>
-<p><strong>Uzivatel:</strong> {{ review.user.username }}</p>
-<p><strong>Text:</strong> {{ review.text|default:"Bez textu" }}</p>
+<div class="mx-auto max-w-[1220px]">
+{% include "includes/page_header.html" with title="Moderace recenze" subtitle="Schvaleni nebo zamitnuti recenze ctenare." %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Ulozit moderaci</button>
-</form>
+<section class="rounded-2xl bg-white p-6 shadow-card sm:p-7 lg:max-w-4xl">
+    <div class="rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
+        <p><span class="font-semibold text-slate-500">Kniha:</span> {{ review.book.title }}</p>
+        <p><span class="font-semibold text-slate-500">Uzivatel:</span> {{ review.user.username }}</p>
+        <p class="mt-2"><span class="font-semibold text-slate-500">Text:</span> {{ review.text|default:"Bez textu" }}</p>
+    </div>
+
+    <form method="post" class="mt-4 space-y-4">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}" class="mb-1 block text-sm font-semibold text-slate-700">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="mt-1 text-sm text-rose-700">{{ field.errors|striptags }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Ulozit moderaci</button>
+    </form>
+</section>
+</div>
 {% endblock %}

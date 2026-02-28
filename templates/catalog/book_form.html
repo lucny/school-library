@@ -3,12 +3,27 @@
 {% block title %}Nova kniha | Skolni knihovna{% endblock %}
 
 {% block content %}
-<h2>Pridat knihu</h2>
+<div class="mx-auto max-w-[1220px]">
+{% include "includes/page_header.html" with title="Pridat knihu" subtitle="Vyplnte metadata, autory a dostupnost knihy." %}
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Ulozit</button>
-    <a href="{% url 'catalog:book_list' %}">Zrusit</a>
-</form>
+<section class="rounded-2xl bg-white p-6 shadow-card sm:p-7 lg:max-w-4xl">
+    <form method="post" enctype="multipart/form-data" class="space-y-4 sm:space-y-5">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}" class="mb-1 block text-sm font-semibold text-slate-700">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<p class="mt-1 text-xs text-slate-500">{{ field.help_text }}</p>{% endif %}
+                {% if field.errors %}
+                    <p class="mt-1 text-sm text-rose-700">{{ field.errors|striptags }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <div class="flex flex-wrap gap-2 pt-2">
+            <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Ulozit</button>
+            <a href="{% url 'catalog:book_list' %}" class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Zrusit</a>
+        </div>
+    </form>
+</section>
+</div>
 {% endblock %}

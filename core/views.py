@@ -10,7 +10,7 @@ from reviews.models import Review
 
 def home(request):
     user_model = get_user_model()
-    latest_books = Book.objects.prefetch_related("authors").order_by("-created_at")[:3]
+    latest_books = Book.objects.prefetch_related("authors").order_by("-created_at")[:6]
     latest_reviews = Review.objects.select_related("book", "user").filter(status=Review.Status.APPROVED).order_by("-updated_at")[:5]
     top_books = (
         Book.objects.annotate(avg_rating=Avg("ratings__score"), ratings_count=Count("ratings"))
@@ -24,6 +24,8 @@ def home(request):
         .order_by("-avg_rating", "-ratings_count", "title")
         .first()
     )
+    if featured_book is None:
+        featured_book = Book.objects.order_by("-created_at").first()
     author_of_week = Author.objects.annotate(book_count=Count("books")).filter(book_count__gt=0).order_by("-book_count", "last_name", "first_name").first()
 
     context = {

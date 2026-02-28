@@ -3,12 +3,23 @@
 {% block title %}Hodnoceni knihy | Skolni knihovna{% endblock %}
 
 {% block content %}
-<h2>Hodnoceni a recenze</h2>
-<p>Kniha: <strong>{{ book.title }}</strong></p>
+<div class="mx-auto max-w-[1220px]">
+{% include "includes/page_header.html" with title="Hodnoceni a recenze" subtitle="Kniha: "|add:book.title %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Ulozit</button>
-</form>
+<section class="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-card sm:p-7">
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}" class="mb-1 block text-sm font-semibold text-slate-700">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="mt-1 text-sm text-rose-700">{{ field.errors|striptags }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Ulozit</button>
+    </form>
+</section>
+</div>
 {% endblock %}

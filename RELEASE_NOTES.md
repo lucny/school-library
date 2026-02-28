@@ -56,6 +56,13 @@
 - Znama omezeni: jen jednoduche AJAX interakce.
 - Co nasleduje: Docker deploy.
 
+## v0.8.1
+- Co je nove: kompletni sjednoceni vzhledu sablon (core, catalog, accounts, reviews, circulation), nova uvodni stranka podle referencniho navrhu, responzivni topbar s vyhledavanim, aktivni stavy navigace, sdilene template komponenty pro hlavicky, statistiky a empty state.
+- Proc je to dulezite: uzivatel ma konzistentni UX napric celou aplikaci, lepsi orientaci v navigaci a citelnejsi rozhrani na mobilu i desktopu.
+- Jak overit: otevrit Domu, Katalog, Muj ucet, Recenze a Vypujcky na mobilnim i desktop viewportu; overit aktivni polozky v menu a funkcnost hledani v horni liste; spustit python manage.py check.
+- Znama omezeni: obsah hero/fotografii je zavisly na dostupnych datech a nahranych obrazcich; mapa ve footeru je zatim staticky placeholder.
+- Co nasleduje: finalni docker/deploy priprava a doplneni dokumentace k UI konvencim.
+
 ## v0.9
 - Co je nove: Dockerfile, docker-compose, PostgreSQL, entrypoint migrate/collectstatic.
 - Proc je to dulezite: reprodukovatelne spusteni projektu.

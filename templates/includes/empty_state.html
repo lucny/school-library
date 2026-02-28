@@ -1,0 +1,6 @@
+<div class="rounded-2xl border border-dashed border-slate-300 bg-white/80 p-6 text-center shadow-card">
+    <p class="text-slate-700">{{ message }}</p>
+    {% if action_url and action_label %}
+        <a href="{{ action_url }}" class="mt-4 inline-flex rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">{{ action_label }}</a>
+    {% endif %}
+</div>

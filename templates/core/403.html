@@ -3,7 +3,8 @@
 {% block title %}Pristup odepren | Skolni knihovna{% endblock %}
 
 {% block content %}
-<h2>Pristup odepren</h2>
-<p>Na tuto stranku nemate opravneni.</p>
-<p><a href="{% url 'core:home' %}">Zpet na domovskou stranku</a></p>
+{% include "includes/page_header.html" with title="Pristup odepren" subtitle="Na tuto stranku nemate opravneni." %}
+<section class="mx-auto max-w-2xl rounded-2xl bg-white p-6 text-center shadow-card">
+	<a href="{% url 'core:home' %}" class="inline-flex rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Zpet na domovskou stranku</a>
+</section>
 {% endblock %}

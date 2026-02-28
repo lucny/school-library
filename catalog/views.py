@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.db.models import Avg, Q
+from django.db.models import Avg, Count, Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 
@@ -16,7 +16,8 @@ class BookListView(ListView):
 
     def get_queryset(self):
         queryset = (
-            Book.objects.select_related()
+            Book.objects
+            .annotate(avg_rating=Avg("ratings__score"), reviews_count=Count("reviews", distinct=True))
             .prefetch_related("authors", "categories")
             .order_by("title")
         )
