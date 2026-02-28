@@ -5,52 +5,83 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Skolni knihovna{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slateFog: "#f2f5f9",
+                        inkBlue: "#143d79",
+                        inkBlueDark: "#0f2c57"
+                    },
+                    boxShadow: {
+                        card: "0 10px 30px -20px rgba(20, 30, 55, 0.35)"
+                    },
+                    fontFamily: {
+                        sans: ["Manrope", "ui-sans-serif", "sans-serif"],
+                        serif: ["Source Serif 4", "ui-serif", "serif"]
+                    }
+                }
+            }
+        };
+    </script>
+    {% block extra_head %}{% endblock %}
 </head>
-<body>
-    <header>
-        <h1>{% trans "Skolni knihovna" %}</h1>
-        <nav>
-            <a href="{% url 'core:home' %}">{% trans "Domu" %}</a> |
-            <a href="{% url 'catalog:book_list' %}">{% trans "Katalog" %}</a> |
-            <a href="{% url 'accounts:index' %}">{% trans "Ucty" %}</a> |
-            <a href="{% url 'circulation:index' %}">{% trans "Vypujcky" %}</a> |
-            <a href="{% url 'reviews:index' %}">{% trans "Recenze" %}</a>
-        </nav>
-        <div>
-            {% if request.user.is_authenticated %}
-                {% trans "Prihlasen" %}: {{ request.user.username }} |
-                <form method="post" action="{% url 'accounts:logout' %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">{% trans "Odhlasit" %}</button>
-                </form>
-            {% else %}
-                <a href="{% url 'accounts:login' %}">{% trans "Prihlasit" %}</a> |
-                <a href="{% url 'accounts:signup' %}">{% trans "Registrovat" %}</a>
+<body class="min-h-screen bg-gradient-to-b from-slateFog via-white to-slateFog/60 text-slate-900 antialiased">
+    <div class="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
+        <header class="py-6">
+            <div class="flex flex-wrap items-center gap-4 rounded-2xl bg-white/90 px-4 py-4 shadow-card backdrop-blur sm:px-6">
+                <a href="{% url 'core:home' %}" class="flex items-center gap-3 font-serif text-2xl font-bold text-slate-900">
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-inkBlue text-white">KB</span>
+                    <span class="text-lg leading-tight">{% trans "Skolni knihovna" %}</span>
+                </a>
+                <nav class="flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-700 sm:ml-2 sm:gap-3 sm:text-base">
+                    <a href="{% url 'core:home' %}" class="rounded-lg px-3 py-2 transition hover:bg-slate-100 hover:text-inkBlue">{% trans "Domu" %}</a>
+                    <a href="{% url 'catalog:book_list' %}" class="rounded-lg px-3 py-2 transition hover:bg-slate-100 hover:text-inkBlue">{% trans "Katalog" %}</a>
+                    <a href="{% url 'circulation:index' %}" class="rounded-lg px-3 py-2 transition hover:bg-slate-100 hover:text-inkBlue">{% trans "Vypujcky" %}</a>
+                    <a href="{% url 'reviews:index' %}" class="rounded-lg px-3 py-2 transition hover:bg-slate-100 hover:text-inkBlue">{% trans "Recenze" %}</a>
+                </nav>
+                <div class="ml-auto flex flex-wrap items-center gap-2 text-sm">
+                    {% if request.user.is_authenticated %}
+                        <span class="rounded-lg bg-slate-100 px-3 py-2 font-medium text-slate-700">{% trans "Prihlasen" %}: {{ request.user.username }}</span>
+                        <form method="post" action="{% url 'accounts:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="rounded-lg bg-slate-800 px-3 py-2 font-semibold text-white transition hover:bg-black">{% trans "Odhlasit" %}</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="rounded-lg bg-inkBlue px-3 py-2 font-semibold text-white transition hover:bg-inkBlueDark">{% trans "Prihlasit" %}</a>
+                        <a href="{% url 'accounts:signup' %}" class="rounded-lg border border-slate-300 px-3 py-2 font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">{% trans "Registrovat" %}</a>
+                    {% endif %}
+                    <form action="{% url 'set_language' %}" method="post" class="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2 py-1">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                        <label for="language" class="text-xs font-semibold uppercase tracking-wide text-slate-500">{% trans "Jazyk" %}</label>
+                        <select name="language" id="language" class="rounded-md border border-slate-200 px-2 py-1 text-sm">
+                            {% get_current_language as CURRENT_LANGUAGE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% for lang in LANGUAGES %}
+                                <option value="{{ lang.0 }}" {% if lang.0 == CURRENT_LANGUAGE %}selected{% endif %}>{{ lang.1 }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="rounded-md bg-slate-800 px-2.5 py-1 text-xs font-semibold text-white">{% trans "Zmenit" %}</button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <main>
+            {% if messages %}
+                <ul class="mb-5 space-y-2">
+                    {% for message in messages %}
+                        <li class="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-800">{{ message }}</li>
+                    {% endfor %}
+                </ul>
             {% endif %}
-        </div>
-        <form action="{% url 'set_language' %}" method="post" style="margin-top: 8px;">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.get_full_path }}">
-            <label for="language">{% trans "Jazyk" %}:</label>
-            <select name="language" id="language">
-                {% get_current_language as CURRENT_LANGUAGE %}
-                {% get_available_languages as LANGUAGES %}
-                {% for lang in LANGUAGES %}
-                    <option value="{{ lang.0 }}" {% if lang.0 == CURRENT_LANGUAGE %}selected{% endif %}>{{ lang.1 }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit">{% trans "Zmenit" %}</button>
-        </form>
-    </header>
-    <main>
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        {% block content %}{% endblock %}
-    </main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
 </body>
 </html>
