@@ -1,7 +1,8 @@
 from datetime import timedelta
 
 from django.test import TestCase
-from django.contrib.auth.models import Group, User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.urls import reverse
@@ -10,6 +11,8 @@ from accounts.constants import LIBRARIAN_GROUP
 from catalog.models import Book
 
 from .models import Loan, Reservation
+
+User = get_user_model()
 
 
 class CirculationAccessTests(TestCase):

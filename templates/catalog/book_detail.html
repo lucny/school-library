@@ -5,6 +5,10 @@
 {% block content %}
 <h2>{{ book.title }}</h2>
 
+{% if book.cover_image %}
+<p><img src="{{ book.cover_image.url }}" alt="Obalka knihy {{ book.title }}" style="max-width: 240px; height: auto;"></p>
+{% endif %}
+
 {% if book.subtitle %}
 <p><strong>Podnazev:</strong> {{ book.subtitle }}</p>
 {% endif %}

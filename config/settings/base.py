@@ -122,6 +122,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "accounts.User"
 
 SITE_ID = int(os.getenv("DJANGO_SITE_ID", "1"))
 

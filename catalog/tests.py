@@ -1,9 +1,12 @@
 from django.test import TestCase
-from django.contrib.auth.models import Permission, User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 
 from .models import Author, Book, Category
+
+User = get_user_model()
 
 
 class CatalogModelTests(TestCase):

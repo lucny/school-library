@@ -1,5 +1,6 @@
 from django.test import TestCase
-from django.contrib.auth.models import Group, User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.db import IntegrityError
 from django.urls import reverse
 
@@ -7,6 +8,8 @@ from accounts.constants import LIBRARIAN_GROUP
 from catalog.models import Book
 
 from .models import Rating, Review
+
+User = get_user_model()
 
 
 class ReviewsModelTests(TestCase):

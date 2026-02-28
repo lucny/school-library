@@ -29,6 +29,7 @@ class BookForm(forms.ModelForm):
             "publication_year",
             "language",
             "description",
+            "cover_image",
             "authors",
             "categories",
             "copies_total",

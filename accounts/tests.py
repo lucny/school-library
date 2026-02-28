@@ -1,9 +1,12 @@
 from django.test import TestCase
-from django.contrib.auth.models import Group, User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.core.management import call_command
 from django.urls import reverse
 
 from .constants import LIBRARIAN_GROUP, READER_GROUP
+
+User = get_user_model()
 
 
 class AccountsFlowTests(TestCase):

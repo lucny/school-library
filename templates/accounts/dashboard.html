@@ -4,11 +4,23 @@
 
 {% block content %}
 <h2>Muj ucet</h2>
+{% if request.user.profile_photo %}
+<p><img src="{{ request.user.profile_photo.url }}" alt="Profilove foto uzivatele {{ request.user.username }}" style="max-width: 180px; height: auto;"></p>
+{% endif %}
 <p>Jste prihlasen jako <strong>{{ request.user.username }}</strong>.</p>
 <ul>
     <li>E-mail: {{ request.user.email|default:"neuveden" }}</li>
     <li>Jmeno: {{ request.user.get_full_name|default:"neuvedeno" }}</li>
+    <li>Bio: {{ request.user.bio|default:"neuvedeno" }}</li>
 </ul>
+{% if request.user.social_links.exists %}
+<h3>Odkazy</h3>
+<ul>
+    {% for link in request.user.social_links.all %}
+    <li><a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.label }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% if request.user.groups.all %}
 <p>Role:
     {% for group in request.user.groups.all %}

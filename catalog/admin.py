@@ -5,7 +5,7 @@ from .models import Author, Book, BookAttachment, Category
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ("first_name", "last_name", "birth_date", "death_date")
+    list_display = ("first_name", "last_name", "birth_date", "death_date", "portrait")
     search_fields = ("first_name", "last_name")
     prepopulated_fields = {"slug": ("first_name", "last_name")}
 
@@ -24,7 +24,7 @@ class BookAttachmentInline(admin.TabularInline):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ("title", "isbn", "publication_year", "language", "copies_total", "is_available")
+    list_display = ("title", "isbn", "publication_year", "language", "copies_total", "is_available", "cover_image")
     list_filter = ("language", "publication_year", "is_available", "categories")
     search_fields = ("title", "isbn", "authors__first_name", "authors__last_name")
     prepopulated_fields = {"slug": ("title",)}

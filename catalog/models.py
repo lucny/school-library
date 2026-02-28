@@ -16,6 +16,12 @@ class Author(models.Model):
     last_name = models.CharField(max_length=120, verbose_name="Last name")
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     biography = models.TextField(blank=True, verbose_name="Biography")
+    portrait = models.ImageField(
+        upload_to="authors/portraits/%Y/%m/",
+        null=True,
+        blank=True,
+        verbose_name="Portrait",
+    )
     birth_date = models.DateField(null=True, blank=True, verbose_name="Birth date")
     death_date = models.DateField(null=True, blank=True, verbose_name="Death date")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -89,6 +95,12 @@ class Book(models.Model):
         verbose_name="Language",
     )
     description = models.TextField(blank=True, verbose_name="Description")
+    cover_image = models.ImageField(
+        upload_to="books/covers/%Y/%m/",
+        null=True,
+        blank=True,
+        verbose_name="Cover image",
+    )
     authors = models.ManyToManyField(Author, related_name="books", verbose_name="Authors")
     categories = models.ManyToManyField(Category, related_name="books", blank=True, verbose_name="Categories")
     copies_total = models.PositiveIntegerField(
