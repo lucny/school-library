@@ -1,0 +1,24 @@
+{
+  "dataset": "maturitni_seznam_2025_2026",
+  "version": "1.0.0",
+  "source": "Školní seznam literárních děl k maturitní zkoušce (SŠPU a U Opava) pro školní rok 2025/2026",
+  "generated_at": "2026-02-28",
+  "school_year": "2025/2026",
+  "counts": {
+    "works": 117,
+    "authors": 90,
+    "categories": 1,
+    "book_authors": 125,
+    "book_categories": 117
+  },
+  "files": [
+    "data/authors.csv",
+    "data/books.csv",
+    "data/book_authors.csv",
+    "data/categories.csv",
+    "data/book_categories.csv",
+    "media/authors/portraits/",
+    "media/books/covers/",
+    "media/users/profile_photos/"
+  ]
+}
