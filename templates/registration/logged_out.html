@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Odhlaseni | Skolni knihovna{% endblock %}
+{% block title %}Odhlášení | Školní knihovna{% endblock %}
 
 {% block content %}
 <div class="mx-auto max-w-[1220px]">
-{% include "includes/page_header.html" with title="Byli jste odhlaseni" subtitle="Relace byla bezpecne ukoncena." %}
+{% include "includes/page_header.html" with title="Byli jste odhlášeni" subtitle="Relace byla bezpečně ukončena." %}
 <section class="mx-auto max-w-2xl rounded-2xl bg-white p-6 text-center shadow-card sm:p-7">
-	<a href="{% url 'accounts:login' %}" class="inline-flex rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Prihlasit znovu</a>
+	<a href="{% url 'accounts:login' %}" class="inline-flex rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Přihlásit znovu</a>
 </section>
 </div>
 {% endblock %}

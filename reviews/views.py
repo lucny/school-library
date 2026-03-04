@@ -44,7 +44,7 @@ def add_for_book(request, slug):
             score=form.cleaned_data["score"],
             text=form.cleaned_data["text"],
         )
-        messages.success(request, "Hodnoceni a recenze byly ulozeny.")
+        messages.success(request, "Hodnocení a recenze byly uloženy.")
         return redirect("catalog:book_detail", slug=book.slug)
 
     return render(request, "reviews/review_form.html", {"book": book, "form": form})
@@ -59,6 +59,6 @@ def moderate(request, pk):
         moderated_review.moderated_by = request.user
         moderated_review.moderated_at = timezone.now()
         moderated_review.save()
-        messages.success(request, "Moderace recenze byla ulozena.")
+        messages.success(request, "Moderace recenze byla uložena.")
         return redirect("reviews:index")
     return render(request, "reviews/moderate_review.html", {"review": review, "form": form})

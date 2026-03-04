@@ -4,11 +4,21 @@ from .models import Rating, Review
 
 
 class RatingReviewForm(forms.Form):
-    score = forms.IntegerField(min_value=1, max_value=5, label="Hodnoceni (1-5)")
+    score = forms.IntegerField(min_value=1, max_value=5, label="Hodnocení (1-5)")
     text = forms.CharField(required=False, widget=forms.Textarea, label="Recenze")
 
 
 class ReviewModerationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["status"].label = "Stav"
+        self.fields["status"].choices = [
+            (Review.Status.PENDING, "Čeká na schválení"),
+            (Review.Status.APPROVED, "Schváleno"),
+            (Review.Status.REJECTED, "Zamítnuto"),
+        ]
+        self.fields["moderation_note"].label = "Poznámka moderátora"
+
     class Meta:
         model = Review
         fields = ["status", "moderation_note"]

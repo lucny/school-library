@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Registrace | Skolni knihovna{% endblock %}
+{% block title %}Registrace | Školní knihovna{% endblock %}
 
 {% block content %}
 <div class="mx-auto max-w-[1220px]">
-{% include "includes/page_header.html" with title="Registrace" subtitle="Vytvorte novy ctenarsky ucet v systemu knihovny." %}
+{% include "includes/page_header.html" with title="Registrace" subtitle="Vytvořte nový čtenářský účet v systému knihovny." %}
 
 <section class="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-card sm:p-7">
     <form method="post" class="space-y-4">
@@ -18,11 +18,11 @@
                 {% endif %}
             </div>
         {% endfor %}
-        <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Vytvorit ucet</button>
+        <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Vytvořit účet</button>
     </form>
     <p class="mt-4 text-sm text-slate-600">
-        Uz mate ucet?
-        <a href="{% url 'accounts:login' %}" class="font-semibold text-inkBlue hover:text-inkBlueDark">Prihlaste se</a>
+        Už máte účet?
+        <a href="{% url 'accounts:login' %}" class="font-semibold text-inkBlue hover:text-inkBlueDark">Přihlaste se</a>
     </p>
 </section>
 </div>

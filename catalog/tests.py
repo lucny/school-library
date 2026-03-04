@@ -74,4 +74,4 @@ class CatalogViewTests(TestCase):
         self.client.login(username="librarian1", password="StrongPass123!")
         response = self.client.get(reverse("catalog:book_create"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Pridat knihu")
+        self.assertContains(response, "Přidat knihu")

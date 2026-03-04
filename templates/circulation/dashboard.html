@@ -1,43 +1,43 @@
 {% extends "base.html" %}
 
-{% block title %}Sprava vypujcek | Skolni knihovna{% endblock %}
+{% block title %}Správa výpůjček | Školní knihovna{% endblock %}
 
 {% block content %}
 <div class="mx-auto max-w-[1220px]">
-{% include "includes/page_header.html" with title="Sprava vypujcek" subtitle="Administrace aktivnich vypujcek a rezervaci. Tato cast je dostupna roli librarian." %}
+{% include "includes/page_header.html" with title="Správa výpůjček" subtitle="Administrace aktivních výpůjček a rezervací. Tato část je dostupná roli knihovník." %}
 
 <section class="grid gap-6 lg:grid-cols-2">
     <article class="rounded-2xl bg-white p-6 shadow-card sm:p-7">
-        <h2 class="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">Aktivni vypujcky</h2>
+        <h2 class="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">Aktivní výpůjčky</h2>
         {% if active_loans %}
             <ul class="mt-4 space-y-2 text-sm text-slate-700">
                 {% for loan in active_loans %}
                     <li class="rounded-xl border border-slate-200 p-3">
                         <p class="font-semibold text-slate-800">{{ loan.book.title }}</p>
-                        <p>Uzivatel: {{ loan.borrower.username }}</p>
-                        <p>Termin vraceni: {{ loan.due_date }}</p>
+                        <p>Uživatel: {{ loan.borrower.username }}</p>
+                        <p>Termín vrácení: {{ loan.due_date }}</p>
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <div class="mt-4">{% include "includes/empty_state.html" with message="Zadne aktivni vypujcky." %}</div>
+            <div class="mt-4">{% include "includes/empty_state.html" with message="Žádné aktivní výpůjčky." %}</div>
         {% endif %}
     </article>
 
     <article class="rounded-2xl bg-white p-6 shadow-card sm:p-7">
-        <h2 class="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">Pending rezervace</h2>
+        <h2 class="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">Čekající rezervace</h2>
         {% if pending_reservations %}
             <ul class="mt-4 space-y-2 text-sm text-slate-700">
                 {% for reservation in pending_reservations %}
                     <li class="rounded-xl border border-slate-200 p-3">
                         <p class="font-semibold text-slate-800">{{ reservation.book.title }}</p>
-                        <p>Uzivatel: {{ reservation.requester.username }}</p>
+                        <p>Uživatel: {{ reservation.requester.username }}</p>
                         {% if reservation.expires_at %}<p>Expiruje: {{ reservation.expires_at|date:"Y-m-d H:i" }}</p>{% endif %}
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <div class="mt-4">{% include "includes/empty_state.html" with message="Zadne pending rezervace." %}</div>
+            <div class="mt-4">{% include "includes/empty_state.html" with message="Žádné čekající rezervace." %}</div>
         {% endif %}
     </article>
 </section>

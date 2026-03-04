@@ -13,6 +13,8 @@ class Rating(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        verbose_name = "Hodnocení"
+        verbose_name_plural = "Hodnocení"
         ordering = ["-updated_at"]
         constraints = [models.UniqueConstraint(fields=["book", "user"], name="unique_rating_per_user_book")]
         indexes = [models.Index(fields=["score"], name="rating_score_idx")]
@@ -23,9 +25,9 @@ class Rating(models.Model):
 
 class Review(models.Model):
     class Status(models.TextChoices):
-        PENDING = "pending", "Pending"
-        APPROVED = "approved", "Approved"
-        REJECTED = "rejected", "Rejected"
+        PENDING = "pending", "Čeká na schválení"
+        APPROVED = "approved", "Schválená"
+        REJECTED = "rejected", "Zamítnutá"
 
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="reviews")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="reviews")
@@ -44,6 +46,8 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        verbose_name = "Recenze"
+        verbose_name_plural = "Recenze"
         ordering = ["-updated_at"]
         constraints = [models.UniqueConstraint(fields=["book", "user"], name="unique_review_per_user_book")]
         indexes = [models.Index(fields=["status"], name="review_status_idx")]

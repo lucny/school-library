@@ -29,11 +29,11 @@ class AccountsFlowTests(TestCase):
     def test_login_page_loads(self):
         response = self.client.get(reverse("accounts:login"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Prihlaseni")
+        self.assertContains(response, "Přihlášení")
 
     def test_login_page_shows_oauth_options(self):
         response = self.client.get(reverse("accounts:login"))
-        self.assertContains(response, "OAuth prihlaseni")
+        self.assertContains(response, "OAuth přihlášení")
         self.assertContains(response, "Google")
         self.assertContains(response, "Microsoft")
         self.assertContains(response, "GitHub")

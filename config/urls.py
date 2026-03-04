@@ -21,9 +21,9 @@ from django.urls import include, path
 
 handler403 = "core.views.permission_denied_view"
 
-admin.site.site_header = "Skolni knihovna - administrace"
-admin.site.site_title = "Skolni knihovna admin"
-admin.site.index_title = "Sprava knihovny"
+admin.site.site_header = "Školní knihovna - administrace"
+admin.site.site_title = "Školní knihovna admin"
+admin.site.index_title = "Správa knihovny"
 
 urlpatterns = [
     path("admin/", admin.site.urls),

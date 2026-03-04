@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Nova kniha | Skolni knihovna{% endblock %}
+{% block title %}Nová kniha | Školní knihovna{% endblock %}
 
 {% block content %}
 <div class="mx-auto max-w-[1220px]">
-{% include "includes/page_header.html" with title="Pridat knihu" subtitle="Vyplnte metadata, autory a dostupnost knihy." %}
+{% include "includes/page_header.html" with title="Přidat knihu" subtitle="Vyplňte metadata, autory a dostupnost knihy." %}
 
 <section class="rounded-2xl bg-white p-6 shadow-card sm:p-7 lg:max-w-4xl">
     <form method="post" enctype="multipart/form-data" class="space-y-4 sm:space-y-5">
@@ -20,8 +20,8 @@
             </div>
         {% endfor %}
         <div class="flex flex-wrap gap-2 pt-2">
-            <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Ulozit</button>
-            <a href="{% url 'catalog:book_list' %}" class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Zrusit</a>
+            <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Uložit</button>
+            <a href="{% url 'catalog:book_list' %}" class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Zrušit</a>
         </div>
     </form>
 </section>

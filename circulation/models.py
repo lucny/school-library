@@ -14,10 +14,10 @@ def default_due_date():
 
 class Reservation(models.Model):
     class Status(models.TextChoices):
-        PENDING = "pending", "Pending"
-        FULFILLED = "fulfilled", "Fulfilled"
-        CANCELLED = "cancelled", "Cancelled"
-        EXPIRED = "expired", "Expired"
+        PENDING = "pending", "Čekající"
+        FULFILLED = "fulfilled", "Vyřízená"
+        CANCELLED = "cancelled", "Zrušená"
+        EXPIRED = "expired", "Expirovaná"
 
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="reservations")
     requester = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="reservations")
@@ -27,6 +27,8 @@ class Reservation(models.Model):
     note = models.CharField(max_length=255, blank=True)
 
     class Meta:
+        verbose_name = "Rezervace"
+        verbose_name_plural = "Rezervace"
         ordering = ["-reserved_at"]
         constraints = [
             models.UniqueConstraint(
@@ -48,9 +50,9 @@ class Reservation(models.Model):
 
 class Loan(models.Model):
     class Status(models.TextChoices):
-        ACTIVE = "active", "Active"
-        RETURNED = "returned", "Returned"
-        OVERDUE = "overdue", "Overdue"
+        ACTIVE = "active", "Aktivní"
+        RETURNED = "returned", "Vrácená"
+        OVERDUE = "overdue", "Po termínu"
 
     book = models.ForeignKey(Book, on_delete=models.PROTECT, related_name="loans")
     borrower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="loans")
@@ -68,6 +70,8 @@ class Loan(models.Model):
     note = models.CharField(max_length=255, blank=True)
 
     class Meta:
+        verbose_name = "Výpůjčka"
+        verbose_name_plural = "Výpůjčky"
         ordering = ["-borrowed_at"]
         constraints = [
             models.UniqueConstraint(
@@ -87,15 +91,15 @@ class Loan(models.Model):
     def clean(self):
         super().clean()
         if self.due_date and self.borrowed_at and self.due_date < self.borrowed_at.date():
-            raise ValidationError({"due_date": "Due date cannot be earlier than borrowed date."})
+            raise ValidationError({"due_date": "Datum vrácení nemůže být dříve než datum vypůjčení."})
 
         if self.status == self.Status.ACTIVE:
             active_loans_count = Loan.objects.filter(book=self.book, status=self.Status.ACTIVE).exclude(pk=self.pk).count()
             if active_loans_count >= self.book.copies_total:
-                raise ValidationError("No copy is currently available for this book.")
+                raise ValidationError("Pro tuto knihu není aktuálně dostupný žádný výtisk.")
 
         if self.status == self.Status.RETURNED and self.returned_at is None:
-            raise ValidationError({"returned_at": "Returned loans must have return timestamp."})
+            raise ValidationError({"returned_at": "Vrácená výpůjčka musí mít vyplněný čas vrácení."})
 
     def save(self, *args, **kwargs):
         if self.returned_at and self.status != self.Status.RETURNED:

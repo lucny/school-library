@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Pristup odepren | Skolni knihovna{% endblock %}
+{% block title %}Přístup odepřen | Školní knihovna{% endblock %}
 
 {% block content %}
-{% include "includes/page_header.html" with title="Pristup odepren" subtitle="Na tuto stranku nemate opravneni." %}
+{% include "includes/page_header.html" with title="Přístup odepřen" subtitle="Na tuto stránku nemáte oprávnění." %}
 <section class="mx-auto max-w-2xl rounded-2xl bg-white p-6 text-center shadow-card">
-	<a href="{% url 'core:home' %}" class="inline-flex rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Zpet na domovskou stranku</a>
+	<a href="{% url 'core:home' %}" class="inline-flex rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Zpět na domovskou stránku</a>
 </section>
 {% endblock %}

@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Hodnoceni knihy | Skolni knihovna{% endblock %}
+{% block title %}Hodnocení knihy | Školní knihovna{% endblock %}
 
 {% block content %}
 <div class="mx-auto max-w-[1220px]">
-{% include "includes/page_header.html" with title="Hodnoceni a recenze" subtitle="Kniha: "|add:book.title %}
+{% include "includes/page_header.html" with title="Hodnocení a recenze" subtitle="Kniha: "|add:book.title %}
 
 <section class="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-card sm:p-7">
     <form method="post" class="space-y-4">
@@ -18,7 +18,7 @@
                 {% endif %}
             </div>
         {% endfor %}
-        <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Ulozit</button>
+        <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Uložit</button>
     </form>
 </section>
 </div>

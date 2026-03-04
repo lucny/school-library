@@ -29,7 +29,7 @@ def reserve_book(request, slug):
 
     if active_loans < book.copies_total:
         return JsonResponse(
-            {"ok": False, "message": "Kniha je momentalne dostupna. Rezervace neni potreba."},
+            {"ok": False, "message": "Kniha je momentálně dostupná. Rezervace není potřeba."},
             status=400,
         )
 
@@ -40,6 +40,6 @@ def reserve_book(request, slug):
     )
 
     if created:
-        return JsonResponse({"ok": True, "message": "Rezervace byla vytvorena."}, status=201)
+        return JsonResponse({"ok": True, "message": "Rezervace byla vytvořena."}, status=201)
 
-    return JsonResponse({"ok": False, "message": "Uz mate aktivni rezervaci teto knihy."}, status=409)
+    return JsonResponse({"ok": False, "message": "Už máte aktivní rezervaci této knihy."}, status=409)

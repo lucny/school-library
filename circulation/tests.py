@@ -37,7 +37,7 @@ class CirculationAccessTests(TestCase):
         self.client.login(username="librarian", password="StrongPass123!")
         response = self.client.get(reverse("circulation:index"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Sprava vypujcek")
+        self.assertContains(response, "Správa výpůjček")
 
 
 class CirculationModelTests(TestCase):

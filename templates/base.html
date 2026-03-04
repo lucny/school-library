@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Skolni knihovna{% endblock %}</title>
+    <title>{% block title %}Školní knihovna{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
@@ -76,9 +76,9 @@
                 </a>
                 {% with active_ns=request.resolver_match.namespace active_url=request.resolver_match.url_name %}
                 <nav class="order-2 flex w-full flex-wrap items-center gap-1 text-sm font-semibold text-slate-700 sm:order-none sm:ml-2 sm:w-auto sm:gap-2 sm:text-base">
-                    <a href="{% url 'core:home' %}" class="rounded-lg px-3 py-2 transition {% if active_ns == 'core' and active_url == 'home' %}bg-inkBlue text-white hover:bg-inkBlueDark hover:text-white{% else %}hover:bg-slate-100 hover:text-inkBlue{% endif %}">{% trans "Domu" %}</a>
+                    <a href="{% url 'core:home' %}" class="rounded-lg px-3 py-2 transition {% if active_ns == 'core' and active_url == 'home' %}bg-inkBlue text-white hover:bg-inkBlueDark hover:text-white{% else %}hover:bg-slate-100 hover:text-inkBlue{% endif %}">{% trans "Domů" %}</a>
                     <a href="{% url 'catalog:book_list' %}" class="rounded-lg px-3 py-2 transition {% if active_ns == 'catalog' %}bg-inkBlue text-white hover:bg-inkBlueDark hover:text-white{% else %}hover:bg-slate-100 hover:text-inkBlue{% endif %}">{% trans "Katalog" %}</a>
-                    <a href="{% url 'circulation:index' %}" class="rounded-lg px-3 py-2 transition {% if active_ns == 'circulation' %}bg-inkBlue text-white hover:bg-inkBlueDark hover:text-white{% else %}hover:bg-slate-100 hover:text-inkBlue{% endif %}">{% trans "Vypujcky" %}</a>
+                    <a href="{% url 'circulation:index' %}" class="rounded-lg px-3 py-2 transition {% if active_ns == 'circulation' %}bg-inkBlue text-white hover:bg-inkBlueDark hover:text-white{% else %}hover:bg-slate-100 hover:text-inkBlue{% endif %}">{% trans "Výpůjčky" %}</a>
                     <a href="{% url 'reviews:index' %}" class="rounded-lg px-3 py-2 transition {% if active_ns == 'reviews' %}bg-inkBlue text-white hover:bg-inkBlueDark hover:text-white{% else %}hover:bg-slate-100 hover:text-inkBlue{% endif %}">{% trans "Recenze" %}</a>
                 </nav>
                 <form method="get" action="{% url 'catalog:book_list' %}" class="order-3 w-full sm:order-none sm:ml-auto sm:w-72">
@@ -90,13 +90,13 @@
                 </form>
                 <div class="order-4 flex w-full flex-wrap items-center justify-end gap-2 text-sm sm:order-none sm:ml-2 sm:w-auto">
                     {% if request.user.is_authenticated %}
-                        <span class="rounded-lg bg-slate-100 px-3 py-2 font-medium text-slate-700">{% trans "Prihlasen" %}: {{ request.user.username }}</span>
+                        <span class="rounded-lg bg-slate-100 px-3 py-2 font-medium text-slate-700">{% trans "Přihlášen" %}: {{ request.user.username }}</span>
                         <form method="post" action="{% url 'accounts:logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class="rounded-lg bg-slate-800 px-3 py-2 font-semibold text-white transition hover:bg-black">{% trans "Odhlasit" %}</button>
+                            <button type="submit" class="rounded-lg bg-slate-800 px-3 py-2 font-semibold text-white transition hover:bg-black">{% trans "Odhlásit" %}</button>
                         </form>
                     {% else %}
-                        <a href="{% url 'accounts:login' %}" class="rounded-lg px-3 py-2 font-semibold transition {% if active_ns == 'accounts' and active_url == 'login' %}bg-inkBlue text-white hover:bg-inkBlueDark{% else %}border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-50{% endif %}">{% trans "Prihlasit" %}</a>
+                        <a href="{% url 'accounts:login' %}" class="rounded-lg px-3 py-2 font-semibold transition {% if active_ns == 'accounts' and active_url == 'login' %}bg-inkBlue text-white hover:bg-inkBlueDark{% else %}border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-50{% endif %}">{% trans "Přihlásit" %}</a>
                         <a href="{% url 'accounts:signup' %}" class="rounded-lg px-3 py-2 font-semibold transition {% if active_ns == 'accounts' and active_url == 'signup' %}bg-inkBlue text-white hover:bg-inkBlueDark{% else %}border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-50{% endif %}">{% trans "Registrovat" %}</a>
                     {% endif %}
                     <form action="{% url 'set_language' %}" method="post" class="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2 py-1">
@@ -110,7 +110,7 @@
                                 <option value="{{ lang.0 }}" {% if lang.0 == CURRENT_LANGUAGE %}selected{% endif %}>{{ lang.1 }}</option>
                             {% endfor %}
                         </select>
-                        <button type="submit" class="rounded-md bg-slate-800 px-2.5 py-1 text-xs font-semibold text-white">{% trans "Zmenit" %}</button>
+                        <button type="submit" class="rounded-md bg-slate-800 px-2.5 py-1 text-xs font-semibold text-white">{% trans "Změnit" %}</button>
                     </form>
                 </div>
                 {% endwith %}

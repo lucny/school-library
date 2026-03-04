@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load socialaccount %}
 
-{% block title %}Prihlaseni | Skolni knihovna{% endblock %}
+{% block title %}Přihlášení | Školní knihovna{% endblock %}
 
 {% block content %}
 <div class="mx-auto max-w-[1220px]">
-{% include "includes/page_header.html" with title="Prihlaseni" subtitle="Prihlaste se lokalnim uctem nebo OAuth providerem." %}
+{% include "includes/page_header.html" with title="Přihlášení" subtitle="Přihlaste se lokálním účtem nebo OAuth providerem." %}
 
 <section class="mx-auto grid max-w-4xl gap-6 lg:grid-cols-2">
     <article class="rounded-2xl bg-white p-6 shadow-card sm:p-7">
-        <h2 class="font-serif text-2xl font-bold text-slate-900">Lokalni ucet</h2>
+        <h2 class="font-serif text-2xl font-bold text-slate-900">Lokální účet</h2>
         <form method="post" class="mt-4 space-y-4">
             {% csrf_token %}
             {% for field in form %}
@@ -19,14 +19,14 @@
                     {% if field.errors %}<p class="mt-1 text-sm text-rose-700">{{ field.errors|striptags }}</p>{% endif %}
                 </div>
             {% endfor %}
-            <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Prihlasit</button>
+            <button type="submit" class="rounded-lg bg-inkBlue px-4 py-2 text-sm font-semibold text-white transition hover:bg-inkBlueDark">Přihlásit</button>
         </form>
-        <p class="mt-4 text-sm"><a href="{% url 'accounts:password_reset' %}" class="font-semibold text-inkBlue hover:text-inkBlueDark">Zapomenute heslo?</a></p>
-        <p class="mt-2 text-sm text-slate-600">Nemate ucet? <a href="{% url 'accounts:signup' %}" class="font-semibold text-inkBlue hover:text-inkBlueDark">Registrujte se</a></p>
+        <p class="mt-4 text-sm"><a href="{% url 'accounts:password_reset' %}" class="font-semibold text-inkBlue hover:text-inkBlueDark">Zapomenuté heslo?</a></p>
+        <p class="mt-2 text-sm text-slate-600">Nemáte účet? <a href="{% url 'accounts:signup' %}" class="font-semibold text-inkBlue hover:text-inkBlueDark">Registrujte se</a></p>
     </article>
 
     <article class="rounded-2xl bg-white p-6 shadow-card sm:p-7">
-        <h2 class="font-serif text-2xl font-bold text-slate-900">OAuth prihlaseni</h2>
+        <h2 class="font-serif text-2xl font-bold text-slate-900">OAuth přihlášení</h2>
         <div class="mt-4 space-y-2">
             <a href="{% provider_login_url 'google' process='login' %}" class="flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Google</a>
             <a href="{% provider_login_url 'microsoft' process='login' %}" class="flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Microsoft</a>
